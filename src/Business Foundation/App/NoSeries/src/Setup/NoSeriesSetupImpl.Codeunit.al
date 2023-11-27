@@ -8,7 +8,9 @@ namespace Microsoft.Foundation.NoSeries;
 codeunit 305 "No. Series - Setup Impl."
 {
     Access = Internal;
-
+    Permissions =
+        tabledata "No. Series" = r,
+        tabledata "No. Series Line" = rimd;
 
     [EventSubscriber(ObjectType::Table, Database::"No. Series", 'OnBeforeDeleteEvent', '', false, false)]
     local procedure OnDeleteNoSeries(var Rec: Record "No. Series")
