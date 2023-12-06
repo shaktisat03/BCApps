@@ -5,9 +5,9 @@
 
 namespace System.Apps;
 
+using System.Apps.AppSource;
 using System.Environment;
 using System.Environment.Configuration;
-using Microsoft.AppSource;
 
 permissionset 2500 "Extension Management - Read"
 {
