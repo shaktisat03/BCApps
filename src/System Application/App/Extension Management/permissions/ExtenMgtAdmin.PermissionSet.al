@@ -6,6 +6,7 @@
 namespace System.Apps;
 
 using System.Environment.Configuration;
+using Microsoft.AppSource;
 
 permissionset 2502 "Exten. Mgt. - Admin"
 {
@@ -28,5 +29,6 @@ permissionset 2502 "Exten. Mgt. - Admin"
                   tabledata "NAV App Object Prerequisites" = Rimd,
                   tabledata "NAV App Tenant Add-In" = Rimd,
                   tabledata "NAV App Tenant Operation" = RIMD,
-                  tabledata "Published Application" = Rimd;
+                  tabledata "Published Application" = Rimd,
+                  tabledata "AppSource Product" = RMID;
 }

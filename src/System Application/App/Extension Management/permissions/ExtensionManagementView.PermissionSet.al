@@ -6,6 +6,7 @@
 namespace System.Apps;
 
 using System.Environment.Configuration;
+using Microsoft.AppSource;
 
 permissionset 2501 "Extension Management - View"
 {
@@ -14,5 +15,6 @@ permissionset 2501 "Extension Management - View"
 
     IncludedPermissionSets = "Extension Management - Read";
 
-    Permissions = tabledata "NAV App Setting" = m;
+    Permissions = tabledata "NAV App Setting" = m,
+                  tabledata "AppSource Product" = RMID;
 }
