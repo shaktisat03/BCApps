@@ -78,7 +78,7 @@ table 309 "No. Series Line"
                 NoSeriesMgt: Codeunit NoSeriesMgt;
             begin
                 Validate(Open);
-                if Implementation = Enum::"No. Series Implementation"::Sequence then begin
+                if "Allow Gaps in Nos." or (Implementation = Enum::"No. Series Implementation"::Sequence) then begin
                     NoSeriesMgt.RecreateSequence(Rec);
                     if "Line No." <> 0 then
                         if Modify() then;
