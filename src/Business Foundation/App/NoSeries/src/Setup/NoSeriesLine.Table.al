@@ -78,7 +78,7 @@ table 309 "No. Series Line"
                 NoSeriesMgt: Codeunit NoSeriesMgt;
             begin
                 Validate(Open);
-                if "Allow Gaps in Nos." then begin
+                if Implementation = Enum::"No. Series Implementation"::Sequence then begin
                     NoSeriesMgt.RecreateSequence(Rec);
                     if "Line No." <> 0 then
                         if Modify() then;
@@ -95,7 +95,7 @@ table 309 "No. Series Line"
             begin
                 NoSeriesMgt.UpdateNoSeriesLine(Rec, "Last No. Used", CopyStr(FieldCaption("Last No. Used"), 1, 100));
                 Validate(Open);
-                if "Allow Gaps in Nos." then begin
+                if Implementation = Enum::"No. Series Implementation"::Sequence then begin
                     NoSeriesMgt.RecreateSequence(Rec);
                     if "Line No." <> 0 then
                         if Modify() then;
@@ -127,7 +127,7 @@ table 309 "No. Series Line"
                 NoSeriesMgt: Codeunit NoSeriesMgt;
             begin
                 NoSeries.Get("Series Code");
-                if "Allow Gaps in Nos." = xRec."Allow Gaps in Nos." then
+                if Rec."Allow Gaps in Nos." = xRec."Allow Gaps in Nos." then
                     exit;
                 if "Allow Gaps in Nos." then
                     NoSeriesMgt.RecreateSequence(Rec)
@@ -139,6 +139,11 @@ table 309 "No. Series Line"
                 end;
                 if "Line No." <> 0 then
                     Modify();
+
+                if "Allow Gaps in Nos." then // Keep the implementation in sync with the Allow Gaps field
+                    Validate(Implementation, Enum::"No. Series Implementation"::Sequence)
+                else
+                    Validate(Implementation, Enum::"No. Series Implementation"::Normal);
             end;
         }
         field(12; "Sequence Name"; Code[40])
