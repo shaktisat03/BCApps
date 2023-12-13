@@ -25,6 +25,11 @@ codeunit 306 "No. Series - Stateless Impl." implements "No. Series - Single"
         exit(GetNextNoInternal(NoSeriesLine, true, UsageDate, HideErrorsAndWarnings));
     end;
 
+    procedure MayProduceGaps(): Boolean
+    begin
+        exit(false);
+    end;
+
     local procedure GetNextNoInternal(var NoSeriesLine: Record "No. Series Line"; ModifySeries: Boolean; UsageDate: Date; HideErrorsAndWarnings: Boolean): Code[20]
     var
         NoSeriesMgtInternal: Codeunit NoSeriesMgtInternal;

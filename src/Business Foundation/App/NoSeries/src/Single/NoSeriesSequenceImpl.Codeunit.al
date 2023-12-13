@@ -36,6 +36,11 @@ codeunit 307 "No. Series - Sequence Impl." implements "No. Series - Single"
         exit(''); // TODO: Recreate the sequence? This means the sequence produced a number less than the starting number.
     end;
 
+    procedure MayProduceGaps(): Boolean
+    begin
+        exit(true);
+    end;
+
     [TryFunction]
     local procedure TryGetCurrentSequenceNo(SequenceName: Code[40]; var LastSeqNoUsed: BigInteger)
     begin

@@ -81,6 +81,16 @@ page 457 "No. Series Lines"
                         CurrPage.Update(true);
                     end;
                 }
+                field(Implementation; Rec.Implementation)
+                {
+                    Caption = 'Implementation';
+                    ToolTip = 'Specifies the implementation to use for getting numbers. Some may produce gaps in the number series. This is practical for records, such as item cards and warehouse documents that, unlike financial transactions, can be deleted and cause gaps in the number sequence.';
+
+                    trigger OnValidate()
+                    begin
+                        CurrPage.Update(true);
+                    end;
+                }
                 field(Open; Rec.Open)
                 {
                     Caption = 'Open';

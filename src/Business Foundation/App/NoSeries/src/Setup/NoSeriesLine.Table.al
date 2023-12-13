@@ -153,6 +153,23 @@ table 309 "No. Series Line"
             DataClassification = CustomerContent;
             Editable = false;
         }
+        field(14; Implementation; Enum "No. Series Implementation")
+        {
+            Caption = 'Implementation';
+            DataClassification = SystemMetadata;
+
+#if not CLEAN24
+#pragma warning disable AL0432
+            trigger OnValidate()
+            var
+                NoSeriesSingle: Interface "No. Series - Single";
+            begin
+                NoSeriesSingle := Implementation;
+                "Allow Gaps in Nos." := NoSeriesSingle.MayProduceGaps(); // Keep the Allow Gaps field in sync with the implementation
+            end;
+#pragma warning restore AL0432
+#endif
+        }
         field(10000; Series; Code[10]) // NA (MX) Functionality
         {
             Caption = 'Series';
@@ -223,6 +240,14 @@ table 309 "No. Series Line"
 
     var
         NumberLengthErr: Label 'The number %1 cannot be extended to more than 20 characters.', Comment = '%1=No.';
+
+    procedure MayProduceGaps(): Boolean
+    var
+        NoSeriesSingle: Interface "No. Series - Single";
+    begin
+        NoSeriesSingle := Implementation;
+        exit(NoSeriesSingle.MayProduceGaps());
+    end;
 
     local procedure CalculateOpen(): Boolean
     begin
