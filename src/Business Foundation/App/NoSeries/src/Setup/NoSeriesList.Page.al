@@ -245,15 +245,11 @@ page 571 "No. Series List"
     }
 #pragma warning restore AA0219
     trigger OnAfterGetRecord()
-    var
-        NoSeriesMgt: Codeunit NoSeriesMgt;
     begin
         UpdateLineActionOnPage();
     end;
 
     trigger OnNewRecord(BelowxRec: Boolean)
-    var
-        NoSeriesMgt: Codeunit NoSeriesMgt;
     begin
         UpdateLineActionOnPage();
     end;

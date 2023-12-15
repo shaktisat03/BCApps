@@ -268,15 +268,11 @@ page 456 "No. Series"
     }
 
     trigger OnAfterGetRecord()
-    var
-        NoSeriesMgt: Codeunit NoSeriesMgt;
     begin
         UpdateLineActionOnPage();
     end;
 
     trigger OnNewRecord(BelowxRec: Boolean)
-    var
-        NoSeriesMgt: Codeunit NoSeriesMgt;
     begin
         UpdateLineActionOnPage();
     end;
