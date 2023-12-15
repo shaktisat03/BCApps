@@ -167,6 +167,19 @@ page 571 "No. Series List"
                         NoSeriesMgt.SetAllowGaps(Rec, AllowGaps);
                     end;
                 }
+                field(Implementation; Implementation)
+                {
+                    Caption = 'Implementation';
+                    ToolTip = 'Specifies the implementation to use for getting numbers.';
+
+                    trigger OnValidate()
+                    var
+                        NoSeriesSetupImpl: Codeunit "No. Series - Setup Impl.";
+                    begin
+                        Rec.TestField(Code);
+                        NoSeriesSetupImpl.SetImplementation(Rec, Implementation);
+                    end;
+                }
             }
         }
         area(FactBoxes)
@@ -235,14 +248,24 @@ page 571 "No. Series List"
     var
         NoSeriesMgt: Codeunit NoSeriesMgt;
     begin
-        NoSeriesMgt.UpdateLine(Rec, StartDate, StartNo, EndNo, LastNoUsed, WarningNo, IncrementByNo, LastDateUsed, AllowGaps);
+        UpdateLineActionOnPage();
     end;
 
     trigger OnNewRecord(BelowxRec: Boolean)
     var
         NoSeriesMgt: Codeunit NoSeriesMgt;
     begin
-        NoSeriesMgt.UpdateLine(Rec, StartDate, StartNo, EndNo, LastNoUsed, WarningNo, IncrementByNo, LastDateUsed, AllowGaps);
+        UpdateLineActionOnPage();
+    end;
+
+    local procedure UpdateLineActionOnPage()
+    var
+        NoSeriesMgt: Codeunit NoSeriesMgt;
+        NoSeriesSingle: Interface "No. Series - Single";
+    begin
+        NoSeriesMgt.UpdateLine(Rec, StartDate, StartNo, EndNo, LastNoUsed, WarningNo, IncrementByNo, LastDateUsed, Implementation);
+        NoSeriesSingle := Implementation;
+        AllowGaps := NoSeriesSingle.MayProduceGaps();
     end;
 
     var
@@ -254,5 +277,6 @@ page 571 "No. Series List"
         IncrementByNo: Integer;
         LastDateUsed: Date;
         AllowGaps: Boolean;
+        Implementation: Enum "No. Series Implementation";
 }
 #endif

@@ -169,6 +169,19 @@ page 456 "No. Series"
                         NoSeriesMgt.SetAllowGaps(Rec, AllowGaps);
                     end;
                 }
+                field(Implementation; Implementation)
+                {
+                    Caption = 'Implementation';
+                    ToolTip = 'Specifies the implementation to use for getting numbers.';
+
+                    trigger OnValidate()
+                    var
+                        NoSeriesSetupImpl: Codeunit "No. Series - Setup Impl.";
+                    begin
+                        Rec.TestField(Code);
+                        NoSeriesSetupImpl.SetImplementation(Rec, Implementation);
+                    end;
+                }
             }
         }
         area(FactBoxes)
@@ -258,14 +271,14 @@ page 456 "No. Series"
     var
         NoSeriesMgt: Codeunit NoSeriesMgt;
     begin
-        NoSeriesMgt.UpdateLine(Rec, StartDate, StartNo, EndNo, LastNoUsed, WarningNo, IncrementByNo, LastDateUsed, AllowGaps);
+        UpdateLineActionOnPage();
     end;
 
     trigger OnNewRecord(BelowxRec: Boolean)
     var
         NoSeriesMgt: Codeunit NoSeriesMgt;
     begin
-        NoSeriesMgt.UpdateLine(Rec, StartDate, StartNo, EndNo, LastNoUsed, WarningNo, IncrementByNo, LastDateUsed, AllowGaps);
+        UpdateLineActionOnPage();
     end;
 
     var
@@ -277,11 +290,15 @@ page 456 "No. Series"
         IncrementByNo: Integer;
         LastDateUsed: Date;
         AllowGaps: Boolean;
+        Implementation: Enum "No. Series Implementation";
 
     protected procedure UpdateLineActionOnPage()
     var
         NoSeriesMgt: Codeunit NoSeriesMgt;
+        NoSeriesSingle: Interface "No. Series - Single";
     begin
-        NoSeriesMgt.UpdateLine(Rec, StartDate, StartNo, EndNo, LastNoUsed, WarningNo, IncrementByNo, LastDateUsed, AllowGaps);
+        NoSeriesMgt.UpdateLine(Rec, StartDate, StartNo, EndNo, LastNoUsed, WarningNo, IncrementByNo, LastDateUsed, Implementation);
+        NoSeriesSingle := Implementation;
+        AllowGaps := NoSeriesSingle.MayProduceGaps();
     end;
 }
